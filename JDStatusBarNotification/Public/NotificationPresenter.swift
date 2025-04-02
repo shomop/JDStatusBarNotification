@@ -107,6 +107,7 @@ extension NotificationPresenter {
   ///
   /// - Returns: An initialized ``NotificationPresenter`` instance.
   @objc(sharedPresenter)
+  nonisolated(unsafe)
   public private(set) static var shared = NotificationPresenter()
 
   // MARK: - Presentation
