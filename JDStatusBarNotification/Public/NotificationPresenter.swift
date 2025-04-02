@@ -236,7 +236,7 @@ extension NotificationPresenter {
   ///   - completion: A ``Completion`` closure, which gets called once the dismiss animation finishes.
   ///
   public func dismiss(animated: Bool = true, after delay: Double? = nil, completion: Completion? = nil) {
-    overlayWindow?.statusBarViewController.dismiss(withDuration: animated ? 0.4 : 0.0, afterDelay: delay ?? 0.0, completion: {
+    overlayWindow?.statusBarViewController.dismiss(withDuration: animated ? 0.15 : 0.0, afterDelay: delay ?? 0.0, completion: {
       completion?(self)
     })
   }

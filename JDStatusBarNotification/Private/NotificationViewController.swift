@@ -72,7 +72,7 @@ class NotificationViewController: UIViewController, NotificationViewDelegate {
     dismissCompletionBlock = nil
 
     // animate in
-    animator.animateIn(for: 0.4) { [weak self] in
+    animator.animateIn(for: 0.2) { [weak self] in
       self?.delegate?.didPresentNotification()
       completion?()
     }
@@ -119,11 +119,11 @@ class NotificationViewController: UIViewController, NotificationViewDelegate {
     case .pill:
       var notchAdjustment: CGFloat = 0.0
       if safeAreaInset >= 54.0 {
-        notchAdjustment = 0.0 // For the dynamic island, utilize the default positioning
+        notchAdjustment = 7.0 // For the dynamic island, utilize the default positioning
       } else if safeAreaInset > 20.0 {
-        notchAdjustment = -7.0 // This matches the positioning of a similar system notification
+        notchAdjustment = -7.0 + 7.0 // This matches the positioning of a similar system notification
       } else {
-        notchAdjustment = 3.0 // For no-notch devices, default to a minimum spacing
+        notchAdjustment = 3.0 + 7.0 // For no-notch devices, default to a minimum spacing
       }
       return style.backgroundStyle.pillStyle.height + style.backgroundStyle.pillStyle.topSpacing + notchAdjustment
     }
@@ -161,13 +161,15 @@ class NotificationViewController: UIViewController, NotificationViewDelegate {
       let yPos = (translation.y <= panMaxY
         ? translation.y - panMaxY + rubberBanding
         : rubberBanding)
-      statusBarView.transform = CGAffineTransform(translationX: 0, y: yPos)
+      statusBarView.transform = CGAffineTransform(translationX: 0, y: max(yPos, -24))
+      statusBarView.alpha = max(0.0, min(1.0, 1.0 + yPos/24.0))
     case .ended, .cancelled, .failed:
       let relativeMovement = (statusBarView.transform.ty / panInitialY)
-      if !forceDismissalOnTouchesEnded && -relativeMovement < 0.25 {
+      if !forceDismissalOnTouchesEnded && -relativeMovement < 0.1 {
         // Animate back in place
         UIView.animate(withDuration: 0.22) {
           self.statusBarView.transform = .identity
+          self.statusBarView.alpha = 1.0
         }
       } else {
         // Dismiss

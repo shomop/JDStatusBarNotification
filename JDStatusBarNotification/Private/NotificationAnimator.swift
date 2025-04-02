@@ -29,8 +29,8 @@ class JDSBNotificationAnimator: NSObject, CAAnimationDelegate {
       view.alpha = 0.0
       view.transform = CGAffineTransform.identity
     } else {
-      view.alpha = 1.0
-      view.transform = CGAffineTransform(translationX: 0, y: -view.bounds.height)
+      view.alpha = 0.0
+      view.transform = CGAffineTransform(translationX: 0, y: -24)
     }
 
     if view.style.animationType == .bounce {
@@ -92,7 +92,8 @@ class JDSBNotificationAnimator: NSObject, CAAnimationDelegate {
       if view.style.animationType == .fade {
         view.alpha = 0.0
       } else {
-        view.transform = CGAffineTransform(translationX: 0, y: -view.bounds.height)
+        view.alpha = 0.0
+        view.transform = CGAffineTransform(translationX: 0, y: -24)
       }
     }) { finished in
       if finished, let completion {
