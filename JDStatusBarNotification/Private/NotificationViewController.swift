@@ -119,11 +119,11 @@ class NotificationViewController: UIViewController, NotificationViewDelegate {
     case .pill:
       var notchAdjustment: CGFloat = 0.0
       if safeAreaInset >= 54.0 {
-        notchAdjustment = 7.0 // For the dynamic island, utilize the default positioning
+        notchAdjustment = 4.0 // For the dynamic island, utilize the default positioning
       } else if safeAreaInset > 20.0 {
-        notchAdjustment = -7.0 + 7.0 // This matches the positioning of a similar system notification
+        notchAdjustment = -7.0 + 4.0 // This matches the positioning of a similar system notification
       } else {
-        notchAdjustment = 3.0 + 7.0 // For no-notch devices, default to a minimum spacing
+        notchAdjustment = 3.0 + 4.0 // For no-notch devices, default to a minimum spacing
       }
       return style.backgroundStyle.pillStyle.height + style.backgroundStyle.pillStyle.topSpacing + notchAdjustment
     }
