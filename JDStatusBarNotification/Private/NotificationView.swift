@@ -549,7 +549,7 @@ class NotificationView: UIView, UIGestureRecognizerDelegate, StylableView {
         }
         if let customSubview {
           customSubview.clipsToBounds = false
-          customSubview.layer.mask = roundRectMaskForRectAndRadius(customSubview.convert(pillView.frame, from: pillView.superview))
+//          customSubview.layer.mask = roundRectMaskForRectAndRadius(customSubview.convert(pillView.frame, from: pillView.superview))
         }
     }
   }
