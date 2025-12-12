@@ -63,7 +63,7 @@ class SwiftAPI_tests: XCTestCase {
   func testStyleEnumAvailability() {
     let _:[IncludedStatusBarNotificationStyle] = [.defaultStyle, .dark, .light, .success, .warning, .error, .matrix]
     let _:[StatusBarNotificationBackgroundType] = [.fullWidth, .pill]
-    let _:[StatusBarNotificationAnimationType] = [.move, .bounce, .fade]
+    let _:[StatusBarNotificationAnimationType] = [.move, .bounce, .fade, .quickMove]
     let _:[StatusBarNotificationProgressBarPosition] = [.top, .center, .bottom]
     let _:[StatusBarNotificationSystemBarStyle] = [.defaultStyle, .darkContent, .lightContent]
     let _:[StatusBarNotificationLeftViewAlignment] = [.left, .centerWithText]

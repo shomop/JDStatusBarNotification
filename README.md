@@ -287,6 +287,9 @@ enum {
     /// Fall down from the top and bounce a little bit, before
     /// coming to a rest. Slides back out to the top.
     .bounce
+    
+    /// **[add for BrToast]** Slide in from the top (like move), but slides out and fades out faster.
+    case quickMove
 }
 ```
 

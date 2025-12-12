@@ -72,7 +72,7 @@ class NotificationViewController: UIViewController, NotificationViewDelegate {
     dismissCompletionBlock = nil
 
     // animate in
-    animator.animateIn(for: 0.2) { [weak self] in
+    animator.animateIn(for: view.style.animationType == .quickMove ? 0.2 : 0.4) { [weak self] in
       self?.delegate?.didPresentNotification()
       completion?()
     }
@@ -141,6 +141,8 @@ class NotificationViewController: UIViewController, NotificationViewDelegate {
   @objc private func panGestureRecognized(_ recognizer: UIPanGestureRecognizer) {
     guard recognizer.isEnabled else { return }
 
+    let isQuickMove = statusBarView.style.animationType == .quickMove
+
     switch recognizer.state {
     case .possible:
       break
@@ -161,15 +163,23 @@ class NotificationViewController: UIViewController, NotificationViewDelegate {
       let yPos = (translation.y <= panMaxY
         ? translation.y - panMaxY + rubberBanding
         : rubberBanding)
-      statusBarView.transform = CGAffineTransform(translationX: 0, y: max(yPos, -24))
-      statusBarView.alpha = max(0.0, min(1.0, 1.0 + yPos/24.0))
+      statusBarView.transform = CGAffineTransform(
+        translationX: 0,
+        y: isQuickMove ? max(yPos, -24) : yPos
+      )
+      if isQuickMove {
+        statusBarView.alpha = max(0.0, min(1.0, 1.0 + yPos/24.0))
+      }
     case .ended, .cancelled, .failed:
       let relativeMovement = (statusBarView.transform.ty / panInitialY)
-      if !forceDismissalOnTouchesEnded && -relativeMovement < 0.1 {
+      let threshold = isQuickMove ? 0.1 : 0.25
+      if !forceDismissalOnTouchesEnded && -relativeMovement < threshold {
         // Animate back in place
         UIView.animate(withDuration: 0.22) {
           self.statusBarView.transform = .identity
-          self.statusBarView.alpha = 1.0
+          if isQuickMove {
+            self.statusBarView.alpha = 1.0
+          }
         }
       } else {
         // Dismiss
