@@ -28,6 +28,7 @@ extension StatusBarNotificationAnimationType: StringRepresentable {
       case .move: return ".move"
       case .fade: return ".fade"
       case .bounce: return ".bounce"
+      case .quickMove: return "quickMove"
     }
   }
 }

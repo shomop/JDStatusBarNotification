@@ -28,9 +28,12 @@ class JDSBNotificationAnimator: NSObject, CAAnimationDelegate {
     if view.style.animationType == .fade {
       view.alpha = 0.0
       view.transform = CGAffineTransform.identity
-    } else {
+    } else if view.style.animationType == .quickMove {
       view.alpha = 0.0
       view.transform = CGAffineTransform(translationX: 0, y: -24)
+    } else {
+      view.alpha = 0.0
+      view.transform = CGAffineTransform(translationX: 0, y: -view.bounds.height)
     }
 
     if view.style.animationType == .bounce {
@@ -91,9 +94,12 @@ class JDSBNotificationAnimator: NSObject, CAAnimationDelegate {
     UIView.animate(withDuration: duration, animations: {
       if view.style.animationType == .fade {
         view.alpha = 0.0
-      } else {
+      } else if view.style.animationType == .quickMove {
         view.alpha = 0.0
         view.transform = CGAffineTransform(translationX: 0, y: -24)
+      } else {
+        view.alpha = 0.0
+        view.transform = CGAffineTransform(translationX: 0, y: -view.bounds.height)
       }
     }) { finished in
       if finished, let completion {

@@ -152,6 +152,7 @@ struct StyleEditorScreen: View {
           EnumPickerOptionView(StatusBarNotificationAnimationType.bounce)
           EnumPickerOptionView(StatusBarNotificationAnimationType.move)
           EnumPickerOptionView(StatusBarNotificationAnimationType.fade)
+          EnumPickerOptionView(StatusBarNotificationAnimationType.quickMove)
         }
 
         Toggle("Allow Swipe-To-Dismiss", isOn: $style.canSwipeToDismiss)

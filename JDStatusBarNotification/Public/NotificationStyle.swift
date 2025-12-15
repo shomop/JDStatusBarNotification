@@ -54,6 +54,8 @@ public enum StatusBarNotificationAnimationType: Int {
     case bounce
     /// Fade-in and fade-out in place. No movement animation.
     case fade
+    /// **[add for BrToast]** Slide in from the top (like move), but slides out and fades out faster.
+    case quickMove
 }
 
 /// Defines the position of the progress bar, when used.
