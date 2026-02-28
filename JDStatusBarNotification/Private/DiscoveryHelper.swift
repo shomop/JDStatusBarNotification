@@ -16,13 +16,27 @@ enum DiscoveryHelper {
   }
 
   static func discoverMainWindow(ignoring ignoredWindow: UIWindow? = nil) -> UIWindow? {
+    // Collect windows from connected scenes to avoid deprecated/global APIs
     var allWindows: [UIWindow];
     if let ignoredWindow, let windowScene = ignoredWindow.windowScene {
       allWindows = windowScene.windows;
     } else {
-      allWindows = UIApplication.shared.windows;
+      allWindows = UIApplication.shared.connectedScenes
+        .compactMap { $0 as? UIWindowScene }
+        .flatMap { $0.windows };
     }
-    
+
+    // Prefer the key window if available (this avoids attaching to PiP windows)
+    if let key = allWindows.first(where: { $0.isKeyWindow && !$0.isHidden && $0 != ignoredWindow }) {
+      return key;
+    }
+
+    // Prefer a window that belongs to a foreground-active application scene
+    if let foreground = allWindows.first(where: { !$0.isHidden && $0 != ignoredWindow && $0.windowScene?.activationState == .foregroundActive }) {
+      return foreground;
+    }
+
+    // Fallback to the first non-hidden window
     for window in allWindows {
       if (!window.isHidden && window != ignoredWindow) {
         return window;
